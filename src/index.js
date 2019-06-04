@@ -1,28 +1,28 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { createStore } from 'redux';
+import {
+  applyMiddleware,
+  compose,
+  combineReducers,
+  createStore,
+} from 'redux';
+import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
-import App from './App';
+import donateReducer from './reducer/donate';
+import App from './components/App';
 
-const store = createStore(function(state, action) {
-  const _state = state == null ? {
-    donate: 0,
-    message: '',
-  } : state;
-
-  switch (action.type) {
-    case 'UPDATE_TOTAL_DONATE':
-      return Object.assign({}, _state, {
-        donate: _state.donate + action.amount,
-      });
-    case 'UPDATE_MESSAGE':
-      return Object.assign({}, _state, {
-        message: action.message,
-      });
-
-    default: return _state;
-  }
+const reducer = combineReducers({
+  donate: donateReducer,
 });
+
+const composeEnhancers = compose;
+
+const store = createStore(
+  reducer,
+  composeEnhancers(
+    applyMiddleware(thunk),
+  )
+);
 
 render(
   <Provider store={store}>

@@ -24,60 +24,60 @@ export default connect((state) => state)(
 
     componentDidMount() {
       const self = this;
-      fetch('http://localhost:3001/charities')
-        .then(function(resp) { return resp.json(); })
-        .then(function(data) {
-          self.setState({ charities: data }) });
+      // fetch('http://localhost:3001/charities')
+      //   .then(function(resp) { return resp.json(); })
+      //   .then(function(data) {
+      //     self.setState({ charities: data }) });
 
-      fetch('http://localhost:3001/payments')
-        .then(function(resp) { return resp.json() })
-        .then(function(data) {
-          self.props.dispatch({
-            type: 'UPDATE_TOTAL_DONATE',
-            amount: summaryDonations(data.map((item) => (item.amount))),
-          });
-        })
+      // fetch('http://localhost:3001/payments')
+      //   .then(function(resp) { return resp.json() })
+      //   .then(function(data) {
+      //     self.props.dispatch({
+      //       type: 'UPDATE_TOTAL_DONATE',
+      //       amount: summaryDonations(data.map((item) => (item.amount))),
+      //     });
+      //   })
     }
 
     render() {
       const self = this;
-      const cards = this.state.charities.map(function(item, i) {
-        const payments = [10, 20, 50, 100, 500].map((amount, j) => (
-          <label key={j}>
-            <input
-              type="radio"
-              name="payment"
-              onClick={function() {
-                self.setState({ selectedAmount: amount })
-              }} /> {amount}
-          </label>
-        ));
+      // const cards = this.state.charities.map(function(item, i) {
+      //   const payments = [10, 20, 50, 100, 500].map((amount, j) => (
+      //     <label key={j}>
+      //       <input
+      //         type="radio"
+      //         name="payment"
+      //         onClick={function() {
+      //           self.setState({ selectedAmount: amount })
+      //         }} /> {amount}
+      //     </label>
+      //   ));
 
-        return (
-          <Card key={i}>
-            <p>{item.name}</p>
-            {payments}
-            <button onClick={handlePay.call(self, item.id, self.state.selectedAmount, item.currency)}>Pay</button>
-          </Card>
-        );
-      });
+      //   return (
+      //     <Card key={i}>
+      //       <p>{item.name}</p>
+      //       {payments}
+      //       <button onClick={handlePay.call(self, item.id, self.state.selectedAmount, item.currency)}>Pay</button>
+      //     </Card>
+      //   );
+      // });
 
-      const style = {
-        color: 'red',
-        margin: '1em 0',
-        fontWeight: 'bold',
-        fontSize: '16px',
-        textAlign: 'center',
-      };
-      const donate = this.props.donate;
-      const message = this.props.message;
+      // const style = {
+      //   color: 'red',
+      //   margin: '1em 0',
+      //   fontWeight: 'bold',
+      //   fontSize: '16px',
+      //   textAlign: 'center',
+      // };
+      // const donate = this.props.donate;
+      // const message = this.props.message;
 
       return (
         <div>
           <h1>Tamboon React</h1>
-          <p>All donations: {donate}</p>
-          <p style={style}>{message}</p>
-          {cards}
+          {/* <p>All donations: {donate}</p>
+          <p style={style}>{message}</p> */}
+          {/* {cards} */}
         </div>
       );
     }
