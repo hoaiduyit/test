@@ -18,11 +18,11 @@ class App extends React.Component {
   }
 
   render() {
-    const { donate } = this.props;
+    const { donates, charities } = this.props;
 
     return (
       <Wrapper>
-        {!isEmpty(donate) && donate.map(item => {
+        {!isEmpty(charities) && charities.map(item => {
           return (
             <>
               <Card
@@ -44,18 +44,21 @@ const mapActionToProps = {
 };
 
 const mapStateToProps = state => ({
-  donate: state.donate.donate,
+  charities: state.donate.charities,
+  donates: state.donate.donates,
   message: state.donate.message,
 });
 
 App.propTypes = {
   getCharities: PropTypes.func,
+  charities: PropTypes.instanceOf(Array),
   donate: PropTypes.instanceOf(Array),
   message: PropTypes.string,
 };
 
 App.defaultProps = {
   getCharities: () => { },
+  charities: [],
   donate: [],
   message: '',
 }

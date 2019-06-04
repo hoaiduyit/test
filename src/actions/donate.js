@@ -1,8 +1,14 @@
-export const UPDATE_TOTAL_DONATE = 'UPDATE_TOTAL_DONATE';
+export const SET_CHARITIES = 'SET_CHARITIES';
+export const SET_DONATES = 'SET_DONATES';
 export const UPDATE_MESSAGE = 'UPDATE_MESSAGE';
 
-export const updateTotalDonate = payload => ({
-  type: UPDATE_TOTAL_DONATE,
+export const setDonates = payload => ({
+  type: SET_DONATES,
+  payload,
+});
+
+export const setCharities = payload => ({
+  type: SET_CHARITIES,
   payload,
 });
 
@@ -17,7 +23,14 @@ export const getCharities = () => (
       .then(res => {
         return res.json();
       }).then(data => {
-        dispatch(updateTotalDonate(data));
+        dispatch(setCharities(data));
+      });
+    fetch('http://localhost:3001/payments')
+      .then(res => {
+        return res.json();
+      })
+      .then(data => {
+        dispatch(setDonates(data));
       });
   }
 );
