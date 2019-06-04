@@ -1,11 +1,11 @@
 {
+  "root": true,
   "parser": "babel-eslint",
   "env": {
-    "browser": true,
-    "node": true
+    "es6": true
   },
   "plugins": [
-    "react"
+    "babel", "react"
   ],
   "rules": {
     "quotes": [2, "single"],

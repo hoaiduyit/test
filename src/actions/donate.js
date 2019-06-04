@@ -10,3 +10,14 @@ export const updateMessage = payload => ({
   type: UPDATE_MESSAGE,
   payload,
 });
+
+export const getCharities = () => (
+  (dispatch) => {
+    fetch('http://localhost:3001/charities')
+      .then(res => {
+        return res.json();
+      }).then(data => {
+        dispatch(updateTotalDonate(data));
+      });
+  }
+);

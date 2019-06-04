@@ -1,16 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import PropTypes from 'proptypes';
 import Button from './Button';
+import PayOverlay from './PayOverlay';
 
 const WrapperContent = styled.div`
+  flex: auto;
+  margin: 40px 20px;
   background-color: white;
-  border: 1px solid black;
-  box-shadow: 2px 2px #888888;
-  width: auto;
+  border-radius: 10px;
+  box-shadow: 2px 2px 2px 2px #888888;
+  width: 45%;
+  position: relative;
+  overflow: hidden;
+`;
+
+const DonateContent = styled.div`
 `;
 
 const ImageWrapper = styled.img`
   width: 100%;
+  height: 310px;
 `;
 
 const TitleContent = styled.div`
@@ -18,12 +28,12 @@ const TitleContent = styled.div`
   align-items: center;
   padding: 10px 20px;
   .title {
-    flex: 1;
+    flex: 2;
     font-size: 25px;
     color: #4B608B;
     font-weight: 550;
   }
-  div {
+  .btn-wrapper {
     flex: 1;
     button {
       float: right;
@@ -31,19 +41,41 @@ const TitleContent = styled.div`
   }
 `;
 
-export default class Card extends React.Component {
-  render() {
-    return (
-      <WrapperContent>
-        <ImageWrapper src="" alt="" />
+const Card = React.memo(({ title, imageSrc, currency, isFlex }) => {
+  const [isShow, setIsShow] = useState(false);
+
+  const showPayOverlay = () => {
+    setIsShow(!isShow);
+  }
+
+  return (
+    <WrapperContent isFlex={isFlex}>
+      <PayOverlay currency={currency} isShow={isShow} closePayOverLay={showPayOverlay} />
+      <DonateContent>
+        <ImageWrapper src={`../images/${imageSrc}`} alt="" />
         <TitleContent >
-          <p className='title' >Text</p>
-          <div>
-            <Button title='Donate' />
+          <p className='title' >{title}</p>
+          <div className='btn-wrapper'>
+            <Button title='Donate' onClick={showPayOverlay} />
           </div>
         </TitleContent>
-      </WrapperContent>
-    );
-  };
+      </DonateContent>
+    </WrapperContent>
+  )
+});
+
+Card.propTypes = {
+  title: PropTypes.string,
+  imageSrc: PropTypes.string,
+  currency: PropTypes.string,
+  isFlex: PropTypes.bool,
 };
 
+Card.defaultProps = {
+  title: '',
+  imageSrc: '',
+  currency: '',
+  isFlex: true,
+};
+
+export default Card;
