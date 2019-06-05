@@ -36,9 +36,15 @@ const PayHolder = styled.div`
 `;
 
 
-const PayOverlay = React.memo(({ currency, isShow, closePayOverLay, addDonate, charitiesId }) => {
+const PayOverlay = React.memo(({ 
+  currency, 
+  isShow, 
+  closePayOverLay, 
+  addDonate,
+  charitiesId
+}) => {
   const [amount, setAmount] = useState('10');
-  const listRadioBtn = ['10', '20', '50', '100', '500']
+  const listRadioBtn = ['10', '20', '50', '100', '500'];
 
   const changeAmount = (e) => {
     setAmount(e.target.value);
@@ -77,7 +83,6 @@ const mapActionToProps = {
 };
 
 const mapStateToProps = state => ({
-
 });
 
 PayOverlay.propTypes = {
@@ -85,11 +90,17 @@ PayOverlay.propTypes = {
   closePayOverLay: PropTypes.func.isRequired,
   charitiesId: PropTypes.number.isRequired,
   addDonate: PropTypes.func,
+  setDonates: PropTypes.func,
   currency: PropTypes.string,
+  donates: PropTypes.instanceOf(Array),
+  donateItem: PropTypes.instanceOf(Object),
 };
 
 PayOverlay.defaultProps = {
-  addDonate: () => {},
+  addDonate: () => { },
+  setDonates: () => { },
+  donates: [],
+  donateItem: {},
   currency: 'USD',
 };
 

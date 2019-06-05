@@ -13,6 +13,11 @@ export const setCharities = payload => ({
   payload,
 });
 
+export const updateDonate = payload => ({
+  type: ADD_DONATE,
+  payload,
+});
+
 export const updateMessage = payload => ({
   type: UPDATE_MESSAGE,
   payload,
@@ -42,7 +47,6 @@ export const addDonate = ({charitiesId, amount, currency}) => (
       charitiesId,
       amount,
       currency,
-      id: 7,
     };
 
     fetch('http://localhost:3001/payments', {
@@ -50,8 +54,9 @@ export const addDonate = ({charitiesId, amount, currency}) => (
       body: JSON.stringify(amountBody),
     }).then(res => {
       return res.json();
-    }).then(() => {
+    }).then(data => {
       dispatch(updateMessage(`Thanks for donate ${amount}!`))
+      dispatch(updateDonate({ ...amountBody, id: data.id }));
 
       setTimeout(() => {
         dispatch(updateMessage(''));

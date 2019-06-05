@@ -4,7 +4,11 @@ import { isEmpty } from 'lodash';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Card from './Card';
-import { getCharities } from '../actions/donate';
+import { getCharities, setDonates } from '../actions/donate';
+
+const Wrapper = styled.div`
+  padding: 20px 60px;
+`;
 
 const Title = styled.div`
   margin: 40px 0 20px 0;
@@ -25,7 +29,6 @@ const Message = styled.p`
 const Row = styled.div`
   display: flex;
   flex-wrap: wrap;
-  padding: 20px 60px;
 `;
 
 const Col = styled.div`
@@ -34,18 +37,45 @@ const Col = styled.div`
   display: flex;
 `;
 
+const ListAmount = styled.ul`
+  margin: 0 20px;
+  padding: 0;
+  list-style: none;
+  text-align: center;
+`;
+
 class App extends React.Component {
   componentDidMount() {
     this.props.getCharities();
   }
 
+  componentDidUpdate(prevProps) {
+    const { donates, donateItem } = this.props;
+    if (donateItem !== prevProps.donateItem) {
+      const dumbList = donates;
+      dumbList.push(donateItem);
+      setDonates(dumbList);
+    }
+  }
+  
+
   render() {
     const { donates, charities, message } = this.props;
 
     return (
-      <>
+      <Wrapper>
         <Title>Tamboon React</Title>
         <Message >{message}</Message>
+        <ListAmount>
+          {!isEmpty(donates) && donates.map(item => {
+            if (item.charitiesId) {
+                return (
+                <li key={item.id}>{`${item.amount} ${item.currency}`}</li>
+              )
+            }
+            return null;
+          })}
+        </ListAmount>
         <Row>
           {!isEmpty(charities) && charities.map(item => {
             return (
@@ -60,23 +90,26 @@ class App extends React.Component {
             )
           })}
         </Row>
-      </>
+      </Wrapper>
     );
   }
 }
 
 const mapActionToProps = {
   getCharities,
+  setDonates,
 };
 
 const mapStateToProps = state => ({
   charities: state.donate.charities,
   donates: state.donate.donates,
   message: state.donate.message,
+  donateItem: state.donate.donateItem,
 });
 
 App.propTypes = {
   getCharities: PropTypes.func,
+  setDonates: PropTypes.func,
   charities: PropTypes.instanceOf(Array),
   donate: PropTypes.instanceOf(Array),
   message: PropTypes.string,
@@ -84,6 +117,7 @@ App.propTypes = {
 
 App.defaultProps = {
   getCharities: () => { },
+  setDonates: () => { },
   charities: [],
   donate: [],
   message: '',

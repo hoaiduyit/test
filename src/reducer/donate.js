@@ -1,8 +1,9 @@
-import { SET_DONATES, UPDATE_MESSAGE, SET_CHARITIES } from '../actions/donate';
+import { SET_DONATES, UPDATE_MESSAGE, SET_CHARITIES, ADD_DONATE } from '../actions/donate';
 
 const initState = {
   charities: [],
   donates: [],
+  donateItem: {},
   message: '',
 };
 
@@ -22,6 +23,11 @@ const donateReducer = (state = initState, action = {}) => {
       return {
         ...state,
         message: action.payload,
+      };
+    case ADD_DONATE:
+      return {
+        ...state,
+        donateItem: action.payload,
       };
     default:
       return state;
