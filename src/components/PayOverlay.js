@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 import PropTypes from 'proptypes';
-import Button from './Button';
+import Button from './elements/Button';
+import Radio from './elements/Radio';
+import { addDonate } from '../actions/donate';
 
 const Wrapper = styled.div`
   background-color: white;
@@ -29,50 +32,65 @@ const PayHolder = styled.div`
   }
   .radio-holder {
     margin: 20px 0 30px 0;
-    input[type='radio'] {
-      margin-right: 0;
-    }
-    .amount {
-      margin: 0 15px;
-      width: 20px;
-      height: 20px;
-    }
   }
 `;
 
 
-class PayOverlay extends React.Component {
+const PayOverlay = React.memo(({ currency, isShow, closePayOverLay, addDonate, charitiesId }) => {
+  const [amount, setAmount] = useState('10');
+  const listRadioBtn = ['10', '20', '50', '100', '500']
 
-  render() {
-    const { currency, isShow, closePayOverLay } = this.props;
-
-    return (
-      <Wrapper isShow={isShow}>
-        <div role='button' className='close-btn' onClick={closePayOverLay} >⨯</div>
-        <PayHolder>
-          <div className='description' >{`Select the amount to donate (${currency})`}</div>
-          <div className='radio-holder' >
-            <input className='amount' type='radio' name='amount' value='10' /> 10
-            <input className='amount' type='radio' name='amount' value='20' /> 20
-            <input className='amount' type='radio' name='amount' value='50' /> 50
-            <input className='amount' type='radio' name='amount' value='100' /> 100
-            <input className='amount' type='radio' name='amount' value='500' /> 500
-          </div>
-          <Button title='Pay' />
-        </PayHolder>
-      </Wrapper>
-    );
+  const changeAmount = (e) => {
+    setAmount(e.target.value);
   }
-}
+
+  const addAmountDonate = () => {
+    addDonate({ charitiesId, currency, amount });
+  }
+
+  return (
+    <Wrapper isShow={isShow}>
+      <div role='button' className='close-btn' onClick={closePayOverLay} >⨯</div>
+      <PayHolder>
+        <div className='description' >{`Select the amount to donate (${currency})`}</div>
+        <div className='radio-holder'  >
+          {listRadioBtn.map(item => {
+            return (
+              <Radio
+                key={item}
+                name='amount'
+                value={item}
+                text={item}
+                onChange={changeAmount}
+              />
+            )
+          })}
+        </div>
+        <Button title='Pay' onClick={addAmountDonate} />
+      </PayHolder>
+    </Wrapper>
+  );
+});
+
+const mapActionToProps = {
+  addDonate,
+};
+
+const mapStateToProps = state => ({
+
+});
 
 PayOverlay.propTypes = {
   isShow: PropTypes.bool.isRequired,
   closePayOverLay: PropTypes.func.isRequired,
+  charitiesId: PropTypes.number.isRequired,
+  addDonate: PropTypes.func,
   currency: PropTypes.string,
 };
 
 PayOverlay.defaultProps = {
+  addDonate: () => {},
   currency: 'USD',
 };
 
-export default PayOverlay;
+export default connect(mapStateToProps, mapActionToProps)(PayOverlay);

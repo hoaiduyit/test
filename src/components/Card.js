@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'proptypes';
-import Button from './Button';
+import Button from './elements/Button';
 import PayOverlay from './PayOverlay';
 
 const WrapperContent = styled.div`
@@ -10,7 +10,6 @@ const WrapperContent = styled.div`
   background-color: white;
   border-radius: 10px;
   box-shadow: 2px 2px 2px 2px #888888;
-  width: 45%;
   position: relative;
   overflow: hidden;
 `;
@@ -41,7 +40,7 @@ const TitleContent = styled.div`
   }
 `;
 
-const Card = React.memo(({ title, imageSrc, currency, isFlex }) => {
+const Card = React.memo(({ title, imageSrc, currency, isFlex, charitiesId }) => {
   const [isShow, setIsShow] = useState(false);
 
   const showPayOverlay = () => {
@@ -50,7 +49,12 @@ const Card = React.memo(({ title, imageSrc, currency, isFlex }) => {
 
   return (
     <WrapperContent isFlex={isFlex}>
-      <PayOverlay currency={currency} isShow={isShow} closePayOverLay={showPayOverlay} />
+      <PayOverlay 
+        currency={currency} 
+        isShow={isShow} 
+        closePayOverLay={showPayOverlay} 
+        charitiesId={charitiesId}
+      />
       <DonateContent>
         <ImageWrapper src={`../images/${imageSrc}`} alt="" />
         <TitleContent >

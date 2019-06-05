@@ -6,10 +6,32 @@ import styled from 'styled-components';
 import Card from './Card';
 import { getCharities } from '../actions/donate';
 
-const Wrapper = styled.div`
+const Title = styled.div`
+  margin: 40px 0 20px 0;
+  font-size: 35px;
+  text-align: center;
+  color: #4B608B;
+  font-weight: 700;
+`;
+
+const Message = styled.p`
+  font-size: 20px;
+  color: red;
+  text-align: center;
+  font-weight: 600;
+  height: 20px;
+`;
+
+const Row = styled.div`
   display: flex;
   flex-wrap: wrap;
   padding: 20px 60px;
+`;
+
+const Col = styled.div`
+  flex-basis: ${(6 / 12) * 100}%;
+  position: relative;
+  display: flex;
 `;
 
 class App extends React.Component {
@@ -18,23 +40,27 @@ class App extends React.Component {
   }
 
   render() {
-    const { donates, charities } = this.props;
+    const { donates, charities, message } = this.props;
 
     return (
-      <Wrapper>
-        {!isEmpty(charities) && charities.map(item => {
-          return (
-            <>
-              <Card
-                key={item.id}
-                title={item.name}
-                imageSrc={item.image}
-                currency={item.currency}
-              />
-            </>
-          )
-        })}
-      </Wrapper>
+      <>
+        <Title>Tamboon React</Title>
+        <Message >{message}</Message>
+        <Row>
+          {!isEmpty(charities) && charities.map(item => {
+            return (
+              <Col key={item.id} >
+                <Card
+                  title={item.name}
+                  charitiesId={item.id}
+                  imageSrc={item.image}
+                  currency={item.currency}
+                />
+              </Col>
+            )
+          })}
+        </Row>
+      </>
     );
   }
 }

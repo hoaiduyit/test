@@ -1,5 +1,6 @@
 export const SET_CHARITIES = 'SET_CHARITIES';
 export const SET_DONATES = 'SET_DONATES';
+export const ADD_DONATE = 'ADD_DONATE';
 export const UPDATE_MESSAGE = 'UPDATE_MESSAGE';
 
 export const setDonates = payload => ({
@@ -34,3 +35,27 @@ export const getCharities = () => (
       });
   }
 );
+
+export const addDonate = ({charitiesId, amount, currency}) => (
+  (dispatch) => {
+    const amountBody = {
+      charitiesId,
+      amount,
+      currency,
+      id: 7,
+    };
+
+    fetch('http://localhost:3001/payments', {
+      method: 'POST',
+      body: JSON.stringify(amountBody),
+    }).then(res => {
+      return res.json();
+    }).then(() => {
+      dispatch(updateMessage(`Thanks for donate ${amount}!`))
+
+      setTimeout(() => {
+        dispatch(updateMessage(''));
+      }, 2000);
+    });
+  }
+)
