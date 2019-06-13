@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'proptypes';
-import Button from './Button';
+import Button from './elements/Button';
 import PayOverlay from './PayOverlay';
 
 const WrapperContent = styled.div`
@@ -10,7 +10,6 @@ const WrapperContent = styled.div`
   background-color: white;
   border-radius: 10px;
   box-shadow: 2px 2px 2px 2px #888888;
-  width: 45%;
   position: relative;
   overflow: hidden;
 `;
@@ -40,32 +39,34 @@ const TitleContent = styled.div`
   }
 `;
 
-const Card = React.memo(({ title, imageSrc, currency, isFlex }) => {
-  const [isShow, setIsShow] = useState(false);
+const Card = React.memo(
+  ({ title, imageSrc, currency, isFlex, charitiesId }) => {
+    const [isShow, setIsShow] = useState(false);
 
-  const showPayOverlay = () => {
-    setIsShow(!isShow);
-  };
+    const showPayOverlay = () => {
+      setIsShow(!isShow);
+    };
 
-  return (
-    <WrapperContent isFlex={isFlex}>
-      <PayOverlay
-        currency={currency}
-        isShow={isShow}
-        closePayOverLay={showPayOverlay}
-      />
-      <DonateContent>
-        <ImageWrapper src={`../images/${imageSrc}`} alt="" />
-        <TitleContent>
-          <p className="title">{title}</p>
-          <div className="btn-wrapper">
-            <Button title="Donate" onClick={showPayOverlay} />
-          </div>
-        </TitleContent>
-      </DonateContent>
-    </WrapperContent>
-  );
-});
+    return (
+      <WrapperContent isFlex={isFlex}>
+        <PayOverlay
+          currency={currency}
+          isShow={isShow}
+          closePayOverLay={showPayOverlay}
+        />
+        <DonateContent>
+          <ImageWrapper src={`../images/${imageSrc}`} alt="" />
+          <TitleContent>
+            <p className="title">{title}</p>
+            <div className="btn-wrapper">
+              <Button title="Donate" onClick={showPayOverlay} />
+            </div>
+          </TitleContent>
+        </DonateContent>
+      </WrapperContent>
+    );
+  }
+);
 
 Card.propTypes = {
   title: PropTypes.string,

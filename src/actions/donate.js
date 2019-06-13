@@ -1,5 +1,6 @@
 export const SET_CHARITIES = 'SET_CHARITIES';
 export const SET_DONATES = 'SET_DONATES';
+export const ADD_DONATE = 'ADD_DONATE';
 export const UPDATE_MESSAGE = 'UPDATE_MESSAGE';
 
 export const setDonates = payload => ({
@@ -9,6 +10,11 @@ export const setDonates = payload => ({
 
 export const setCharities = payload => ({
   type: SET_CHARITIES,
+  payload,
+});
+
+export const updateDonate = payload => ({
+  type: ADD_DONATE,
   payload,
 });
 

@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 import PropTypes from 'proptypes';
-import Button from './Button';
+import Button from './elements/Button';
+import Radio from './elements/Radio';
+import { addDonate } from '../actions/donate';
 
 const Wrapper = styled.div`
   background-color: white;
@@ -29,17 +32,10 @@ const PayHolder = styled.div`
   }
   .radio-holder {
     margin: 20px 0 30px 0;
-    input[type='radio'] {
-      margin-right: 0;
-    }
-    .amount {
-      margin: 0 15px;
-      width: 20px;
-      height: 20px;
-    }
   }
 `;
 
+<<<<<<< HEAD
 class PayOverlay extends React.Component {
   render() {
     const { currency, isShow, closePayOverLay } = this.props;
@@ -67,17 +63,75 @@ class PayOverlay extends React.Component {
         </PayHolder>
       </Wrapper>
     );
+=======
+
+const PayOverlay = React.memo(({ 
+  currency, 
+  isShow, 
+  closePayOverLay, 
+  addDonate,
+  charitiesId
+}) => {
+  const [amount, setAmount] = useState('10');
+  const listRadioBtn = ['10', '20', '50', '100', '500'];
+
+  const changeAmount = (e) => {
+    setAmount(e.target.value);
   }
-}
+
+  const addAmountDonate = () => {
+    addDonate({ charitiesId, currency, amount });
+>>>>>>> 9c0e03c13d7fb312c4db4cd946c10fc6128862c7
+  }
+
+  return (
+    <Wrapper isShow={isShow}>
+      <div role='button' className='close-btn' onClick={closePayOverLay} >⨯</div>
+      <PayHolder>
+        <div className='description' >{`Select the amount to donate (${currency})`}</div>
+        <div className='radio-holder'  >
+          {listRadioBtn.map(item => {
+            return (
+              <Radio
+                key={item}
+                name='amount'
+                value={item}
+                text={item}
+                onChange={changeAmount}
+              />
+            )
+          })}
+        </div>
+        <Button title='Pay' onClick={addAmountDonate} />
+      </PayHolder>
+    </Wrapper>
+  );
+});
+
+const mapActionToProps = {
+  addDonate,
+};
+
+const mapStateToProps = state => ({
+});
 
 PayOverlay.propTypes = {
   isShow: PropTypes.bool.isRequired,
   closePayOverLay: PropTypes.func.isRequired,
+  charitiesId: PropTypes.number.isRequired,
+  addDonate: PropTypes.func,
+  setDonates: PropTypes.func,
   currency: PropTypes.string,
+  donates: PropTypes.instanceOf(Array),
+  donateItem: PropTypes.instanceOf(Object),
 };
 
 PayOverlay.defaultProps = {
+  addDonate: () => { },
+  setDonates: () => { },
+  donates: [],
+  donateItem: {},
   currency: 'USD',
 };
 
-export default PayOverlay;
+export default connect(mapStateToProps, mapActionToProps)(PayOverlay);
