@@ -1,11 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import {
-  applyMiddleware,
-  compose,
-  combineReducers,
-  createStore,
-} from 'redux';
+import { applyMiddleware, compose, combineReducers, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import donateReducer from './reducer/donate';
@@ -17,12 +12,7 @@ const reducer = combineReducers({
 
 const composeEnhancers = compose;
 
-const store = createStore(
-  reducer,
-  composeEnhancers(
-    applyMiddleware(thunk),
-  )
-);
+const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk)));
 
 render(
   <Provider store={store}>

@@ -15,8 +15,7 @@ const WrapperContent = styled.div`
   overflow: hidden;
 `;
 
-const DonateContent = styled.div`
-`;
+const DonateContent = styled.div``;
 
 const ImageWrapper = styled.img`
   width: 100%;
@@ -30,7 +29,7 @@ const TitleContent = styled.div`
   .title {
     flex: 2;
     font-size: 25px;
-    color: #4B608B;
+    color: #4b608b;
     font-weight: 550;
   }
   .btn-wrapper {
@@ -46,22 +45,26 @@ const Card = React.memo(({ title, imageSrc, currency, isFlex }) => {
 
   const showPayOverlay = () => {
     setIsShow(!isShow);
-  }
+  };
 
   return (
     <WrapperContent isFlex={isFlex}>
-      <PayOverlay currency={currency} isShow={isShow} closePayOverLay={showPayOverlay} />
+      <PayOverlay
+        currency={currency}
+        isShow={isShow}
+        closePayOverLay={showPayOverlay}
+      />
       <DonateContent>
         <ImageWrapper src={`../images/${imageSrc}`} alt="" />
-        <TitleContent >
-          <p className='title' >{title}</p>
-          <div className='btn-wrapper'>
-            <Button title='Donate' onClick={showPayOverlay} />
+        <TitleContent>
+          <p className="title">{title}</p>
+          <div className="btn-wrapper">
+            <Button title="Donate" onClick={showPayOverlay} />
           </div>
         </TitleContent>
       </DonateContent>
     </WrapperContent>
-  )
+  );
 });
 
 Card.propTypes = {

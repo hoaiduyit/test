@@ -9,11 +9,11 @@ const Wrapper = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
-  opacity: .97;
+  opacity: 0.97;
   text-align: center;
   font-size: 23px;
-  color: #4B608B;
-  display: ${({ isShow }) => isShow ? '' : 'none'};
+  color: #4b608b;
+  display: ${({ isShow }) => (isShow ? '' : 'none')};
   .close-btn {
     cursor: pointer;
     text-align: right;
@@ -40,25 +40,30 @@ const PayHolder = styled.div`
   }
 `;
 
-
 class PayOverlay extends React.Component {
-
   render() {
     const { currency, isShow, closePayOverLay } = this.props;
 
     return (
       <Wrapper isShow={isShow}>
-        <div role='button' className='close-btn' onClick={closePayOverLay} >⨯</div>
+        <div role="button" className="close-btn" onClick={closePayOverLay}>
+          ⨯
+        </div>
         <PayHolder>
-          <div className='description' >{`Select the amount to donate (${currency})`}</div>
-          <div className='radio-holder' >
-            <input className='amount' type='radio' name='amount' value='10' /> 10
-            <input className='amount' type='radio' name='amount' value='20' /> 20
-            <input className='amount' type='radio' name='amount' value='50' /> 50
-            <input className='amount' type='radio' name='amount' value='100' /> 100
-            <input className='amount' type='radio' name='amount' value='500' /> 500
+          <div className="description">{`Select the amount to donate (${currency})`}</div>
+          <div className="radio-holder">
+            <input className="amount" type="radio" name="amount" value="10" />
+            10
+            <input className="amount" type="radio" name="amount" value="20" />
+            20
+            <input className="amount" type="radio" name="amount" value="50" />
+            50
+            <input className="amount" type="radio" name="amount" value="100" />
+            100
+            <input className="amount" type="radio" name="amount" value="500" />
+            500
           </div>
-          <Button title='Pay' />
+          <Button title="Pay" />
         </PayHolder>
       </Wrapper>
     );

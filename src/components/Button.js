@@ -6,20 +6,16 @@ const Wrapper = styled.button`
   cursor: pointer;
   background-color: transparent;
   outline: none;
-  border: 1.5px solid #1732C1;
+  border: 1.5px solid #1732c1;
   padding: 6px;
   border-radius: 5px;
-  color: #1732C1;
+  color: #1732c1;
   font-size: 17px;
   font-weight: 600;
 `;
 
 const Button = ({ title, onClick }) => {
-  return (
-    <Wrapper onClick={onClick} >
-      {title}
-    </Wrapper>
-  );
+  return <Wrapper onClick={onClick}>{title}</Wrapper>;
 };
 
 Button.propTypes = {
@@ -29,7 +25,7 @@ Button.propTypes = {
 
 Button.defaultProps = {
   title: 'Button',
-  onClick: () => { },
+  onClick: () => {},
 };
 
 export default Button;

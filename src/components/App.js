@@ -22,18 +22,19 @@ class App extends React.Component {
 
     return (
       <Wrapper>
-        {!isEmpty(charities) && charities.map(item => {
-          return (
-            <>
-              <Card
-                key={item.id}
-                title={item.name}
-                imageSrc={item.image}
-                currency={item.currency}
-              />
-            </>
-          )
-        })}
+        {!isEmpty(charities) &&
+          charities.map(item => {
+            return (
+              <>
+                <Card
+                  key={item.id}
+                  title={item.name}
+                  imageSrc={item.image}
+                  currency={item.currency}
+                />
+              </>
+            );
+          })}
       </Wrapper>
     );
   }
@@ -57,10 +58,13 @@ App.propTypes = {
 };
 
 App.defaultProps = {
-  getCharities: () => { },
-  charities: [],
+  getCharities: () => {},
+  charities: [],
   donate: [],
   message: '',
-}
+};
 
-export default connect(mapStateToProps, mapActionToProps)(App);
+export default connect(
+  mapStateToProps,
+  mapActionToProps
+)(App);

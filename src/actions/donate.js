@@ -17,20 +17,19 @@ export const updateMessage = payload => ({
   payload,
 });
 
-export const getCharities = () => (
-  (dispatch) => {
-    fetch('http://localhost:3001/charities')
-      .then(res => {
-        return res.json();
-      }).then(data => {
-        dispatch(setCharities(data));
-      });
-    fetch('http://localhost:3001/payments')
-      .then(res => {
-        return res.json();
-      })
-      .then(data => {
-        dispatch(setDonates(data));
-      });
-  }
-);
+export const getCharities = () => dispatch => {
+  fetch('http://localhost:3001/charities')
+    .then(res => {
+      return res.json();
+    })
+    .then(data => {
+      dispatch(setCharities(data));
+    });
+  fetch('http://localhost:3001/payments')
+    .then(res => {
+      return res.json();
+    })
+    .then(data => {
+      dispatch(setDonates(data));
+    });
+};
